@@ -66,6 +66,22 @@ export default class Tictactoe extends React.Component {
       xIsNext: (step % 2) ? false : true,
     });
   }
+  reset() {
+    this.setState({
+      stepNumber: 0,
+      history: [{
+        squares: [
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+        ],
+      }],
+      xIsNext: true,
+      isSource: true,
+      x: null,
+      y: null,
+    });
+  }
   
   render() {
     const history = this.state.history;
@@ -76,7 +92,7 @@ export default class Tictactoe extends React.Component {
       const desc = move ? ('Move #' + move) : 'Game start';
       return (
         <li key={move}>
-          <div href="#" style={{fontWeight: (move === this.state.stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
+          <div className="fontH" style={{fontWeight: (move === this.state.stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
         </li>
       );
     });
@@ -88,8 +104,8 @@ export default class Tictactoe extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
     return (
-      <div className="game">
-        <div className="game-board">
+      <div className="g-tic-game">
+        <div className="g-tic-board">
           <Board
             squares={current.squares}
             line = {this.line}
@@ -97,9 +113,9 @@ export default class Tictactoe extends React.Component {
           />
 
         </div>
-        <div className="game-info">
-          <button onClick={() => this.setState({isSource: !this.state.isSource})}>source</button>
-          <button onClick={() => this.setState({isSource: !this.state.isSource})}>rese</button>
+        <div className="g-tic-info">
+          <button onClick={() => this.setState({isSource: !this.state.isSource})}>sort</button>
+          <button onClick={() => this.reset()}>reset</button>
           <div>{status}</div>
           <ol>{moves}</ol>
         </div>

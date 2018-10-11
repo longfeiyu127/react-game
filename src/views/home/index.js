@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 // import './index.less'
 // import Routes from '../routes';
 // import { routes, Routes } from '../routes';
@@ -19,6 +19,7 @@ export default class Home extends React.Component {
 
   render() {
     console.log(this.props)
+    console.log(this.props.history)
     // console.log(routes)
     return (
       <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
@@ -48,7 +49,7 @@ export default class Home extends React.Component {
             }}
             data-seed="logId"
           >
-            <Games />
+            <Games history={this.props.history}/>
           </TabBar.Item>
           <TabBar.Item
             icon={<i className="iconfont icon-ranks" />}

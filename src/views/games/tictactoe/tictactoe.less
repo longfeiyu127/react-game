@@ -1,31 +1,38 @@
-// body {
-//   font: 14px "Century Gothic", Futura, sans-serif;
-//   margin: 20px;
-// }
 
-ol, ul {
-  padding-left: 30px;
-}
+.g-tic-game {
+  height: 100%;
+  background: url('../../../assets//images/games/common/gameBg.png') no-repeat;
+  background-size: 100% 100%;
+  ol, ul {
+    padding-left: 30px;
+  }
+  
+  .board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+  
+  .status {
+    margin-bottom: 10px;
+  }
+  
+  .kbd-navigation .square:focus {
+    // background: #ddd;
+  }
+  
+  .g-tic-game {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .g-tic-info {
+    margin-left: 20px;
+  }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
-.status {
-  margin-bottom: 10px;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
-.game {
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
+  .fontH {
+    font-family: "TheHistoriaDemo";
+    color: rgb(81, 24, 0);
+    font-size: 40px;
+  }
 }
