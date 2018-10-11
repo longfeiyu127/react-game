@@ -11,6 +11,7 @@
 @color-text-secondary: #a4a9b0;          // 辅助色
 @color-text-placeholder: #bbb;           // 文本框提示
 @color-text-disabled: #bbb;              // 失效
+@color-text-unselected: rgb(136, 136, 136);  // 未选中
 @color-text-caption: #888;               // 辅助描述
 @color-text-paragraph: #333;             // 段落
 @color-link: @brand-primary;             // 链接
@@ -28,16 +29,16 @@
 @opacity-disabled: 0.3;   // switch checkbox radio 等组件禁用的透明度
 
 // 全局/品牌色
-// @brand-primary: #108ee9;
-@brand-primary: red;
-// @brand-primary-tap: #0e80d2;
-@brand-primary-tap: red;
+@brand-primary: #108ee9;
+// @brand-primary: red;
+@brand-primary-tap: #0e80d2;
+// @brand-primary-tap: red;
 @brand-success: #6abf47;
 @brand-warning: #ffc600;
 @brand-error: #f4333c;
 @brand-important: #ff5b05;  // 用于小红点
-// @brand-wait: #108ee9;
-@brand-wait: red;
+@brand-wait: #108ee9;
+// @brand-wait: red;
 
 // 边框色
 @border-color-base: #ddd;
@@ -154,6 +155,8 @@
 // tab-bar
 @tab-bar-fill: #ebeeef;
 @tab-bar-height: 50 * @hd;
+@tab-bar-selected: @brand-primary;
+@tab-bar-unselected: @color-text-unselected;
 
 // toast
 @toast-fill: rgba(58, 58, 58, 0.9); // toast, activity-indicator 的背景颜色

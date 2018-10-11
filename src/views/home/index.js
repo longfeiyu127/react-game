@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 // import './index.less'
 // import Routes from '../routes';
 // import { routes, Routes } from '../routes';
-import Games from "../games";
-import Ranks from "../ranks";
-import Developer from "../developer";
+import Games from "./components/games";
+import Ranks from "./components/ranks";
+import Developer from "./components/developer";
 
-export default class Tab extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

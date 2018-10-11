@@ -1,8 +1,9 @@
 
 import React from 'react';
-import Board from './Board'
+import Board from './components/Board'
+import './tictactoe.less'
 
-export default class Game extends React.Component {
+export default class Tictactoe extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -98,6 +99,7 @@ export default class Game extends React.Component {
         </div>
         <div className="game-info">
           <button onClick={() => this.setState({isSource: !this.state.isSource})}>source</button>
+          <button onClick={() => this.setState({isSource: !this.state.isSource})}>rese</button>
           <div>{status}</div>
           <ol>{moves}</ol>
         </div>
