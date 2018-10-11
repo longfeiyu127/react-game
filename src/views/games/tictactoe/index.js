@@ -23,15 +23,17 @@ export default class Tictactoe extends React.Component {
     this.line = null
   }
   calculateWinner(squares) {
+    console.log(squares, this.state.x, this.state.y)
     let _this = this
     function crosswise() {
       let x = _this.state.x
-      let flag = _this.state.x && squares[x][0] && squares[x][0] === squares[x][1] && squares[x][0] === squares[x][2]
+      let flag = _this.state.x && (squares[x][0] === squares[x][1]) && (squares[x][0] === squares[x][2])
+      console.log(flag)
       return flag ? [[x,0], [x, 1], [x, 2]] : false
     }
     function vertical() {
       let y = _this.state.y
-      let flag = _this.state.y && squares[0][y] && squares[0][y] === squares[1][y] && squares[0][y] === squares[2][y]
+      let flag = _this.state.y && (squares[0][y] === squares[1][y]) && (squares[0][y] === squares[2][y])
       return flag ? [[0,y], [1, y], [2, y]] : false
     }
     function slant() {
@@ -39,7 +41,9 @@ export default class Tictactoe extends React.Component {
       let flag2 = squares[0][2] && squares[0][2] === squares[1][1] && squares[0][2] === squares[2][0]
       return (flag1 || flag2) ? (flag1 ? [[0, 0], [1, 1], [2, 2]] : [[0, 2], [1, 1], [2, 0]]) : false
     }
+    console.log(crosswise(), vertical(), slant())
     const flag = crosswise() || vertical() || slant()
+    console.log(flag)
     this.line = flag ? flag : null
     return flag
   }

@@ -1,11 +1,12 @@
 import React from 'react';
 import Square from '../Square';
+import './board.less'
 
 export default function Board(props) {
   return (
-    <div>
+    <div className="g-tic-board">
       { props.squares.map((item, i) => {
-          return <div className="board-row" key={i}>
+          return <div className="g-tic-board-row" key={i}>
             { item.map((value, j) => <Square value={props.squares[i][j]}
               key= {j}
               heightLine = {
