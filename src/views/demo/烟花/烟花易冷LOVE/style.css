@@ -1,0 +1,42 @@
+html,body{
+width:100%;
+height:100%;
+background:black;
+background-size:cover;
+}
+div{
+width:10px;
+height:20px;
+background:yellow;
+position:absolute;
+padding-left:8px;
+bottom:0;
+}
+#oobox1{
+left: 18%;
+}
+#oobox2{
+left: 40%;
+}
+#oobox3{
+left: 62%;
+}
+#oobox4{
+left: 82%;
+}
+ul{
+position:absolute;
+list-style:none;
+margin:0;
+padding:0;
+width:4px;
+height:4px;
+border-radius:50%;
+}
+ul>li{
+position:absolute;
+width:4px;
+height:4px;
+border-radius:50%;
+background:#d92b34;
+}

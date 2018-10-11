@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>五子棋</title>
+    <style type="text/css">
+        #tab{
+            background:#ccc;
+            border-spacing:0;
+            border:1px solid #000;
+            margin-top:0;
+            margin-left:200px;
+        }
+
+        td{
+            height: 50px;
+            width: 50px;
+            box-sizing: border-box;
+            border: 1px solid #000;
+        }
+        div{
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: black;
+        }
+    </style>
+    <script src="ganmeEngine.js"></script>
+    <script>
+        window.onload=function () {
+            gameEngine.init("tab")
+
+        }
+    </script>
+</head>
+<body>
+<table id="tab">
+
+</table>
+</body>
+</html>

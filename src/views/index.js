@@ -20,7 +20,6 @@ export default class Tab extends React.Component {
   render() {
     console.log(this.props)
     // console.log(routes)
-    
     return (
       <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
         {/* <main>

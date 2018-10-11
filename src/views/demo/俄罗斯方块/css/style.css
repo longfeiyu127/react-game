@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+body,html,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dt,dd,table,th,tr,td,img{margin:0; padding:0;}
+body,html{font:12px "微软雅黑";color:#333;}
+h1,h2,h3,h4,h5,h6,strong,b{
+font-weight:100;
+}
+i,em{font-style:normal;}
+li{list-style:none;}
+img{border:0;}
+a{text-decoration:none; color:#333;}
+input{outline:none;}
+clearfix:after{content:'.';display:block;height:0;overflow:hidden;visibility:hidden; clear:both;}
+/*样式*/
+#box{
+
+}
+.dor{
+display:block;
+width:30px;
+height:30px;
+box-sizing:border-box;
+background:red;
+border:2px solid #000;
+}
+.dor1{
+
+}

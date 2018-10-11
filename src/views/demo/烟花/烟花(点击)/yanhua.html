@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        html,body{
+            height: 100%;
+            width: 100%;
+            background: #000;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<script src="fengzhuang.js"></script>
+<body>
+
+</body>
+</html>
+<script>
+    document.body.onclick=function (evt) {
+        var e=evt||window.event;
+        var x=e.clientX;
+        var y=e.clientY;
+        odiv=createDiv(x);   //产生盒子,然后动画到
+         animate(odiv,{"top":y},function () {
+             odiv.remove();//动画完直接自杀,再产生很多烟花
+             for(var i=0;i<100;i++){
+                  createFire(x,y);
+              }
+         })
+
+    };
+
+    //产生烟花
+    function createFire(x,y) {
+        //产生盒子先
+        var odiv=document.createElement("div");
+        document.body.appendChild(odiv);
+        odiv.style.width="8px";
+        odiv.style.height="8px";
+        odiv.style.position="absolute";
+        odiv.style.background=randomColor();
+        odiv.style.top=y+"px";
+        odiv.style.left=x+"px";
+        //-20 20
+        var ySpeed=parseInt(Math.random()*10)*(Math.random()>0.5?1:-1);
+        var xSpeed=parseInt(Math.random()*10)*(Math.random()>0.5?1:-1);
+
+        //抛物线
+      var timer= setInterval(function () {
+          ySpeed++;
+          odiv.style.left=odiv.offsetLeft+xSpeed+"px";
+          odiv.style.top=odiv.offsetTop+ySpeed+"px";
+          //如果到达边界清除定时器
+         if(odiv.offsetLeft<=0||odiv.offsetLeft>=document.body.clientWidth||odiv.offsetTop>document.body.clientHeight){
+              clearInterval(timer);
+                 odiv.remove();
+          }
+       },10)
+
+
+    }
+////产生盒子
+   function createDiv(x) {
+       var odiv=document.createElement("div");
+       document.body.appendChild(odiv);
+       odiv.style.width="8px";
+       odiv.style.height="16px";
+       odiv.style.position="absolute";
+       odiv.style.background=randomColor();
+       odiv.style.top=document.body.clientHeight+"px";//盒子隐藏在下面
+       odiv.style.left=x+"px";
+       return odiv;
+   }
+
+//产生随机颜色
+    function randomColor() {
+        return "rgb("+parseInt(Math.random()*256)+","+parseInt(Math.random()*256)+","+parseInt(Math.random()*256)+")";
+    }
+
+</script>
