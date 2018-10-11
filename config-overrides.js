@@ -8,7 +8,7 @@ module.exports = function override(config, env) {
   // babel-plugin-import
   config = injectBabelPlugin(['import', {
     libraryName: 'antd-mobile',
-    // style: 'css',
+    //style: 'css',
     style: true, // use less for customized theme
   }], config);
 
@@ -44,11 +44,8 @@ module.exports = function override(config, env) {
           options: {
             // theme vars, also can use theme.js instead of this.
             modifyVars: {
-              // "brand-primary": "#000",
-              // "tabs-color": "red",
-              // "segmented-control-color": "red",
-              // "tag-color": "red",
-              // "brand-wait": "red",
+              "@brand-primary": "#1DA57A",
+              "@brand-wait": "red"
             },
           },
         },

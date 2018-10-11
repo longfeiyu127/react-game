@@ -1,39 +1,36 @@
 import React from 'react';
-import { TabBar, Icon } from 'antd-mobile';
+import { TabBar } from 'antd-mobile';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+// import './index.less'
+// import Routes from '../routes';
+// import { routes, Routes } from '../routes';
+import Games from "../games";
+import Ranks from "../ranks";
+import Developer from "../developer";
 
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'blueTab',
+      selectedTab: 'games',
       hidden: false,
     };
   }
 
-  renderContent(pageText) {
-    return (
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              hidden: !this.state.hidden,
-            });
-          }}
-        >
-          Click to show/hide tab-bar
-        </a>
-      </div>
-    );
-  }
-
   render() {
+    console.log(this.props)
+    // console.log(routes)
     return (
       <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+        {/* <main>
+          <Route exact path={`${this.props.match.url}/games`} component={Games}/>
+          <Route exact path={`${this.props.match.url}/ranks`} component={Ranks}/>
+          <Route exact path={`${this.props.match.url}/developer`} component={Developer}/>
+          <Route exact path="/home" component={Games} />
+        </main> */}
         <TabBar
           // unselectedTintColor="#949494"
-          // tintColor="#33A3F4"
+          tintColor="#108ee9"
           barTintColor="white"
           tabBarPosition="bottom"
           hidden={this.state.hidden}
@@ -41,48 +38,43 @@ export default class Tab extends React.Component {
         >
           <TabBar.Item
             title="游戏库"
-            key="game"
+            key="games"
             icon={<i className="iconfont icon-games" />}
-            selectedIcon={<i className="iconfont icon-games" />}
-            selected={this.state.selectedTab === 'blueTab'}
+            selectedIcon={<i className="iconfont icon-games icon-selected" />}
+            selected={this.state.selectedTab === 'games'}
             // badge={1}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'blueTab',
-              });
+            onPress={() => { 
+              this.setState({ selectedTab: 'games',});
             }}
             data-seed="logId"
           >
+            <Games />
           </TabBar.Item>
           <TabBar.Item
             icon={<i className="iconfont icon-ranks" />}
-            selectedIcon={<i className="iconfont icon-ranks" />}
+            selectedIcon={<i className="iconfont icon-ranks icon-selected" />}
             title="排行榜"
-            key="rank"
+            key="ranks"
             // badge={'new'}
-            selected={this.state.selectedTab === 'redTab'}
+            selected={this.state.selectedTab === 'ranks'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'redTab',
-              });
+              this.setState({ selectedTab: 'ranks',});
             }}
             data-seed="logId1"
           >
-            {this.renderContent('Koubei')}
+            <Ranks />
           </TabBar.Item>
           <TabBar.Item
             icon={<i className="iconfont icon-developer" />}
-            selectedIcon={<i className="iconfont icon-developer" />}
+            selectedIcon={<i className="iconfont icon-developer icon-selected" />}
             title="开发者"
             key="developer"
-            selected={this.state.selectedTab === 'yellowTab'}
+            selected={this.state.selectedTab === 'developer'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'yellowTab',
-              });
+              this.setState({ selectedTab: 'developer' });
             }}
           >
-            {this.renderContent('My')}
+            <Developer />
           </TabBar.Item>
         </TabBar>
       </div>

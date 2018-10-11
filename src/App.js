@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './assets/styles/index.less';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Tab from './views/index';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Hame from './views/home';
 import RouteConfigExample from './routes/test.js'
 class App extends Component {
   render() {
@@ -10,14 +10,12 @@ class App extends Component {
       {/* <Provider store={store}> */}
         <BrowserRouter>
           <Switch>
-            <Route exact path="/home" component={Tab} />
+            <Route exact path="/home" component={Hame} />
             <Route exact path="/routeDemo" component={RouteConfigExample} />
-            <Route component={Tab} />
+            <Redirect from="/" to="/home" />
           </Switch>
         </BrowserRouter>
       {/* </Provider>, */}
-        {/* <Tab /> */}
-        {/* <RouteConfigExample /> */}
       </div>
     );
   }

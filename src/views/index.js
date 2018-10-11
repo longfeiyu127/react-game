@@ -17,46 +17,17 @@ export default class Tab extends React.Component {
     };
   }
 
-  renderContent(pageText) {
-    return (
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              hidden: !this.state.hidden,
-            });
-          }}
-        >
-          Click to show/hide tab-bar
-        </a>
-      </div>
-    );
-  }
-
   render() {
     console.log(this.props)
     // console.log(routes)
     return (
       <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
-        <div>
-          {
-            <Switch>
-              <Route path={`${this.props.match.url}/games`} component={Games}/>
-              <Route path={`${this.props.match.url}/ranks`} component={Ranks}/>
-              <Route path={`${this.props.match.url}/developer`} component={Developer}/>
-            </Switch>
-            // routes.map((route, i) => <Routes key={i} {...route} />)
-            // <Switch>
-            //   <Route exact path="/" component={App} />
-            //   <Route exact path="/comments" component={Comments} />
-            //   <Route exact path="/ranking" component={Ranking} />
-            //   {/* 404 Page */}
-            //   <Route component={App} />
-            // </Switch>
-          }
-        </div>
+        {/* <main>
+          <Route exact path={`${this.props.match.url}/games`} component={Games}/>
+          <Route exact path={`${this.props.match.url}/ranks`} component={Ranks}/>
+          <Route exact path={`${this.props.match.url}/developer`} component={Developer}/>
+          <Route exact path="/home" component={Games} />
+        </main> */}
         <TabBar
           // unselectedTintColor="#949494"
           tintColor="#108ee9"
@@ -67,31 +38,31 @@ export default class Tab extends React.Component {
         >
           <TabBar.Item
             title="游戏库"
-            key="game"
+            key="games"
             icon={<i className="iconfont icon-games" />}
             selectedIcon={<i className="iconfont icon-games icon-selected" />}
             selected={this.state.selectedTab === 'games'}
             // badge={1}
             onPress={() => { 
               this.setState({ selectedTab: 'games',});
-              this.props.history.push('/home/games')
             }}
             data-seed="logId"
           >
+            <Games />
           </TabBar.Item>
           <TabBar.Item
             icon={<i className="iconfont icon-ranks" />}
             selectedIcon={<i className="iconfont icon-ranks icon-selected" />}
             title="排行榜"
-            key="rank"
+            key="ranks"
             // badge={'new'}
             selected={this.state.selectedTab === 'ranks'}
             onPress={() => {
               this.setState({ selectedTab: 'ranks',});
-              this.props.history.push('/home/ranks') 
             }}
             data-seed="logId1"
           >
+            <Ranks />
           </TabBar.Item>
           <TabBar.Item
             icon={<i className="iconfont icon-developer" />}
@@ -100,12 +71,10 @@ export default class Tab extends React.Component {
             key="developer"
             selected={this.state.selectedTab === 'developer'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'developer',
-              });
+              this.setState({ selectedTab: 'developer' });
             }}
           >
-            {this.renderContent('My')}
+            <Developer />
           </TabBar.Item>
         </TabBar>
       </div>
