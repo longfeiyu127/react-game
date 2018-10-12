@@ -1,6 +1,9 @@
 
 import React from 'react';
 import Board from './components/Board'
+import Scoreboard from './components/Scoreboard'
+import Victory from './components/Victory'
+import Firework from '../../../components/Firework'
 import './tictactoe.less'
 
 export default class Tictactoe extends React.Component {
@@ -17,60 +20,66 @@ export default class Tictactoe extends React.Component {
       }],
       xIsNext: true,
       isSource: true,
-      x: null,
-      y: null,
+      oWin: 0,
+      xWin: 0,
+      gameover: false,
     };
-    this.line = null
+    this.gameover = false;
+    this.line = null;
   }
   calculateWinner(squares) {
-    console.log(squares, this.state.x, this.state.y)
-    let _this = this
-    function crosswise() {
-      let x = _this.state.x
-      let flag = _this.state.x && (squares[x][0] === squares[x][1]) && (squares[x][0] === squares[x][2])
-      console.log(flag)
-      return flag ? [[x,0], [x, 1], [x, 2]] : false
+    const resultArr = [
+      [[0, 0],[0, 1],[0, 2]],
+      [[1, 0],[1, 1],[1, 2]],
+      [[2, 0],[2, 1],[2, 2]],
+      [[0, 0],[1, 0],[2, 0]],
+      [[0, 1],[1, 1],[2, 1]],
+      [[0, 2],[1, 2],[2, 2]],
+      [[0, 0],[1, 1],[2, 2]],
+      [[2, 0],[1, 1],[0, 2]]
+    ]
+    let lineRes = null
+    const res = resultArr.some(item => {
+      const squareItem = squares[item[0][0]][item[0][1]]
+      lineRes = item
+      return squareItem && item.every(val => {
+        return squareItem === squares[val[0]][val[1]]
+      })
+    })
+    if (res) {
+      this.line = res ? lineRes : null
+      this.gameover = res ? true : false
     }
-    function vertical() {
-      let y = _this.state.y
-      let flag = _this.state.y && (squares[0][y] === squares[1][y]) && (squares[0][y] === squares[2][y])
-      return flag ? [[0,y], [1, y], [2, y]] : false
-    }
-    function slant() {
-      let flag1 = squares[0][0] && squares[0][0] === squares[1][1] && squares[0][0] === squares[2][2]
-      let flag2 = squares[0][2] && squares[0][2] === squares[1][1] && squares[0][2] === squares[2][0]
-      return (flag1 || flag2) ? (flag1 ? [[0, 0], [1, 1], [2, 2]] : [[0, 2], [1, 1], [2, 0]]) : false
-    }
-    console.log(crosswise(), vertical(), slant())
-    const flag = crosswise() || vertical() || slant()
-    console.log(flag)
-    this.line = flag ? flag : null
-    return flag
+    return res
   }
   handleClick(i, j) {
-    this.setState({x: i, y: j})
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
+    const {history, stepNumber, xIsNext} = this.state
+    const historyArr = history.slice(0, stepNumber + 1);
+    const current = historyArr[historyArr.length - 1];
     const squares = JSON.parse(JSON.stringify(current.squares));
     if (this.calculateWinner(squares) || squares[i][j]) {
       return;
     }
-    squares[i][j] = this.state.xIsNext ? 'X' : 'O';
+    squares[i][j] = xIsNext ? 'X' : 'O';
     this.setState({
-      history: history.concat([{
+      history: historyArr.concat([{
         squares: squares
       }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext,
+      stepNumber: historyArr.length,
+      xIsNext: !xIsNext,
     });
   }
+
   jumpTo(step) {
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) ? false : true,
     });
   }
+
   reset() {
+    this.gameover = false;
+    this.line = null;
     this.setState({
       stepNumber: 0,
       history: [{
@@ -82,47 +91,49 @@ export default class Tictactoe extends React.Component {
       }],
       xIsNext: true,
       isSource: true,
-      x: null,
-      y: null,
     });
   }
   
   render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    const {oWin, xWin, isSource, history, stepNumber, xIsNext} = this.state
+    const current = history[stepNumber];
     const winner = this.calculateWinner(current.squares);
     const moves = history.map((step, _move) => {
-      let move = this.state.isSource ? _move : this.state.history.length - _move - 1
+      let move = isSource ? _move : history.length - _move - 1
       const desc = move ? ('Move #' + move) : 'Game start';
       return (
         <li key={move}>
-          <div className="fontH" style={{fontWeight: (move === this.state.stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
+          <div className="fontH" style={{fontWeight: (move === stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
         </li>
       );
     });
 
     let status;
     if (winner) {
-      status = 'Winner: ' + (this.state.xIsNext ? 'O' : 'X');
+      status = 'Winner: ' + (xIsNext ? 'O' : 'X');
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (xIsNext ? 'X' : 'O');
     }
     return (
       <div className="g-tic-game">
+        <Scoreboard oWin={oWin} xWin={xWin} />
         <div className="g-tic-board">
           <Board
             squares={current.squares}
             line = {this.line}
             onClick={(i, j) => this.handleClick(i, j)}
           />
-
         </div>
         <div className="g-tic-info">
-          <button onClick={() => this.setState({isSource: !this.state.isSource})}>sort</button>
-          <button onClick={() => this.reset()}>reset</button>
-          <div>{status}</div>
-          <ol>{moves}</ol>
+          <div className='operate take-back' onClick={() => this.reset()}>take back</div>
+          {/* <button onClick={() => this.setState({isSource: !isSource})}>sort</button> */}
+          <div className='operate reset' onClick={() => this.reset()}>reset</div>
+          {/* <div>{status}</div> */}
+          {/* <ol>{moves}</ol> */}
         </div>
+        <Firework gameover={this.gameover}>
+          <Victory winner={xIsNext ? 'playerB' : 'playerA'} reset={() => this.reset()} />
+        </Firework>
       </div>
     );
   }
