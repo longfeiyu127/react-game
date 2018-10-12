@@ -28,6 +28,7 @@ export default class Tictactoe extends React.Component {
     this.line = null;
   }
   calculateWinner(squares) {
+    const {xIsNext, xWin, oWin} = this.state
     const resultArr = [
       [[0, 0],[0, 1],[0, 2]],
       [[1, 0],[1, 1],[1, 2]],
@@ -53,11 +54,11 @@ export default class Tictactoe extends React.Component {
     return res
   }
   handleClick(i, j) {
-    const {history, stepNumber, xIsNext} = this.state
+    const {history, stepNumber, xIsNext, xWin, oWin} = this.state
     const historyArr = history.slice(0, stepNumber + 1);
     const current = historyArr[historyArr.length - 1];
     const squares = JSON.parse(JSON.stringify(current.squares));
-    if (this.calculateWinner(squares) || squares[i][j]) {
+    if (squares[i][j] || this.calculateWinner(squares)) {
       return;
     }
     squares[i][j] = xIsNext ? 'X' : 'O';
@@ -68,6 +69,12 @@ export default class Tictactoe extends React.Component {
       stepNumber: historyArr.length,
       xIsNext: !xIsNext,
     });
+    if (this.calculateWinner(squares)) {
+      this.setState({
+        oWin: !xIsNext ? oWin+1 : oWin,
+        xWin: xIsNext ? xWin+1 : xWin,
+      });
+    }
   }
 
   jumpTo(step) {
@@ -97,23 +104,15 @@ export default class Tictactoe extends React.Component {
   render() {
     const {oWin, xWin, isSource, history, stepNumber, xIsNext} = this.state
     const current = history[stepNumber];
-    const winner = this.calculateWinner(current.squares);
-    const moves = history.map((step, _move) => {
-      let move = isSource ? _move : history.length - _move - 1
-      const desc = move ? ('Move #' + move) : 'Game start';
-      return (
-        <li key={move}>
-          <div className="fontH" style={{fontWeight: (move === stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
-        </li>
-      );
-    });
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + (xIsNext ? 'O' : 'X');
-    } else {
-      status = 'Next player: ' + (xIsNext ? 'X' : 'O');
-    }
+    // const moves = history.map((step, _move) => {
+    //   let move = isSource ? _move : history.length - _move - 1
+    //   const desc = move ? ('Move #' + move) : 'Game start';
+    //   return (
+    //     <li key={move}>
+    //       <div className="fontH" style={{fontWeight: (move === stepNumber) ? 900 : 500, cursor: 'pointer'}} onClick={() => this.jumpTo(move)}>{desc}</div>
+    //     </li>
+    //   );
+    // });
     return (
       <div className="g-tic-game">
         <Scoreboard oWin={oWin} xWin={xWin} />
@@ -125,7 +124,7 @@ export default class Tictactoe extends React.Component {
           />
         </div>
         <div className="g-tic-info">
-          <div className='operate take-back' onClick={() => this.reset()}>take back</div>
+          <div className='operate take-back' onClick={() => this.jumpTo(stepNumber - 1)}>take back</div>
           {/* <button onClick={() => this.setState({isSource: !isSource})}>sort</button> */}
           <div className='operate reset' onClick={() => this.reset()}>reset</div>
           {/* <div>{status}</div> */}

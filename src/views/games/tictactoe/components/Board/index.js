@@ -1,5 +1,6 @@
 import React from 'react';
 import Square from '../Square';
+import Pointer from '../Pointer';
 import './board.less'
 
 export default function Board(props) {
@@ -18,6 +19,7 @@ export default function Board(props) {
           </div>
         })
       }
+      <Pointer line={props.line} />
     </div>
   );
 }
