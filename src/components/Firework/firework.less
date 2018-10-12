@@ -1,10 +1,11 @@
 @import '../../assets/styles/theme.less';
 
 @particles: 100;
-@width: 500;
+// @width: 200;
 @width: 500;
 
-@count: 32;
+// @count: 32;
+@count: 60;
 
 @var: `Math.random()`;
 
@@ -12,20 +13,24 @@
 
 @0px:0px;
 
-.a(){
-  box-shadow+: @var*@width - @width/2 + @0px;
-}
-.b(){
-  box-shadow+_: @var*@width - @width/1.2 + @0px; 
-}
-.c(){
-  box-shadow+_: hsl(@var*360, 100%, 50%);
-}
+// .a(){
+//   @var1: @var;
+//   box-shadow+: @var*@width - @width/2 + @0px @var*@width - @width/1.2 + @0px hsl(@var*360, 100%, 50%);
+// };
+// .b(){
+//   box-shadow+_: @var*@width - @width/1.2 + @0px; 
+// };
+// .c(){
+//   box-shadow+_: hsl(@var*360, 100%, 50%);
+// };
 
 .loop(@i) when (@i < @count){
-  .a;
-  .b;
-  .c;
+  // .a();
+  @var1: @var*3.1415*2;
+  @x: sin(@var1)*@width;
+  @y: cos(@var1)*@width;
+  // box-shadow+: @x + @0px @y + @0px hsl(@var*360, 100%, 50%);
+  box-shadow+: @var*@width - @width/2 + @0px @var*@width - @width/1.2 + @0px hsl(@var*360, 100%, 50%);
   .loop(@i+1);
 }
 
