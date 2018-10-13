@@ -28,7 +28,7 @@ export default class Tictactoe extends React.Component {
     this.line = null;
   }
   calculateWinner(squares) {
-    const {xIsNext, xWin, oWin} = this.state
+    // const {xIsNext, xWin, oWin} = this.state
     const resultArr = [
       [[0, 0],[0, 1],[0, 2]],
       [[1, 0],[1, 1],[1, 2]],
@@ -102,7 +102,7 @@ export default class Tictactoe extends React.Component {
   }
   
   render() {
-    const {oWin, xWin, isSource, history, stepNumber, xIsNext} = this.state
+    const {oWin, xWin, history, stepNumber, xIsNext} = this.state
     const current = history[stepNumber];
     // const moves = history.map((step, _move) => {
     //   let move = isSource ? _move : history.length - _move - 1
