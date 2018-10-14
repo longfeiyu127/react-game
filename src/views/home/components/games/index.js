@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import './games.less'
 
 export default class Games extends React.Component {

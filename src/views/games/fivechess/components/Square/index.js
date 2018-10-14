@@ -6,7 +6,9 @@ export default function Square(props) {
   return (
     <div className="g-fic-square" onClick={props.onClick}>
       {/* <div className="squareItem squareBlack"></div> */}
-      <div className={['squareItem', props.value ? (props.value === 'Black' ? 'squareBlack' : 'squareWhite') : 'hide'].join(' ')}></div>
+      <div className={['squareItem', props.inWinLine ? 'squareWin' : ''].join(' ')}>
+        <div className={['squarePiece', props.value ? (props.value === 'Black' ? 'squareBlack' : 'squareWhite') : 'hide'].join(' ') }></div>
+      </div>
       {/* <div className={['squareItem', props.value ? (props.value === 'O' ? 'squareItemO' : 'squareItemX') : ''].join(' ')}></div> */}
     </div>
   );

@@ -22,7 +22,7 @@ import './firework.less';
 // }
 
 export default function Firework(props) {
-  console.log(props)
+  // console.log(props)
   return (
     <div className={['firework-box', props.gameover ? '' : 'hide'].join(' ')}>
       <div className="firework">

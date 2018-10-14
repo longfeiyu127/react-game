@@ -2,9 +2,12 @@
 import React from 'react';
 import Board from './components/Board'
 // import Scoreboard from './components/Scoreboard'
-// import Victory from './components/Victory'
-// import Firework from '../../../components/Firework'
+import Victory from './components/Victory'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Firework from '../../../components/Firework'
 import './fivechess.less'
+import { fullScreen, isFullscreen } from '../../../utils/fullScreen'
 
 //1.横向
 function Crosswise(squares, i, j) {
@@ -88,16 +91,26 @@ export default class Fivechess extends React.Component {
         squares: (new Array(15)).fill((new Array(15)).fill(null))
       }],
       isBlack: true, // 'Black' 'White',
-      winner: undefined
+      winner: undefined,
+      winnerCoord: null,
     };
+  }
+  computeCoord(startPoint, endPoint) {
+    console.log(startPoint, endPoint)
+    const [startI, startJ] = startPoint
+    const stepI = (endPoint[0] - startPoint[0])/4
+    const stepJ = (endPoint[1] - startPoint[1])/4
+    const result = (new Array(5)).fill(undefined)
+    return result.map((item, index) => [startI + index*stepI, startJ + index*stepJ])
   }
   calculateWinner(squares, i, j) {
     // console.log(squares)
     const piece = squares[i][j]
     const result = (Crosswise(...arguments) || Vertical(...arguments) || TopLeft(...arguments) || TopRight(...arguments)) || undefined;
     if (result) {
-      console.log(result)
+      // console.log(result)
       this.setState({
+        winnerCoord: this.computeCoord(...result),
         winner: piece
       })
     }
@@ -129,19 +142,32 @@ export default class Fivechess extends React.Component {
   }
 
   reset() {
-
+    this.setState({
+      history: [{
+        squares: (new Array(15)).fill((new Array(15)).fill(null))
+      }],
+      isBlack: true, // 'Black' 'White',
+      winner: undefined,
+      winnerCoord: null,
+    });
   }
-  
+
   render() {
     // console.log(this.state.history)
-    const { history } = this.state
+    const { history, winner, winnerCoord, isBlack } = this.state
     const current = history[history.length - 1];
     return (
       <div className="g-fivechess">
-        五子棋
-        <Board squares={current.squares} 
+        <Header isBlack={isBlack}  winner={winner} isFullscreen={isFullscreen} fullScreen={fullScreen} />
+        <Board squares={current.squares}
+        winner={winner}
+        winnerCoord={winnerCoord}
         onClick={(i, j) => this.handleClick(i, j)}
         />
+        <Firework gameover={winner}>
+          <Victory winner={winner} reset={() => this.reset()} />
+        </Firework>
+        <Footer />
       </div>
     );
   }
